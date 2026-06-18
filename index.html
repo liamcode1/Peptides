@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Psst... Peptides?</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="cursor-shades" aria-hidden="true">🕶️</div>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Psst Peptides home">
+        <span class="brand-mark">P?</span>
+        <span>Psst... Peptides?</span>
+      </a>
+      <a class="bag-link" href="#legal" aria-label="Open brown paper bag">
+        <span class="bag-icon" aria-hidden="true"></span>
+        <span>Brown bag</span>
+      </a>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="Trench coat peptide menu">
+        <div class="rain" aria-hidden="true"></div>
+        <div class="streetlamp" aria-hidden="true">
+          <span></span>
+        </div>
+
+        <div class="copy-panel">
+          <p class="eyebrow">Midnight research counter</p>
+          <h1>You. Get peptides for "research"</h1>
+          <p>
+            Look, I don't know you, and you definitely didn't get these from me.
+            But if you're looking for that good stuff, the premium amino acid
+            chains that "fell off the back of a laboratory truck," I got you covered.
+          </p>
+        </div>
+
+        <div
+          class="dealer-stage"
+          tabindex="0"
+          role="button"
+          aria-label="Hover or tap to open the jacket menu"
+        >
+          <div class="dealer-shadow"></div>
+          <div class="head">
+            <span class="hat"></span>
+            <span class="face"></span>
+          </div>
+          <div class="body">
+            <div class="coat coat-left"></div>
+            <div class="coat coat-right"></div>
+            <div class="coat-inside">
+              <a class="pocket pocket-one" href="#legal">
+                <strong>Retatrutide</strong>
+                <span>
+                  Triple-target lab lore in a tiny label. Strictly for research,
+                  strictly not from me, and definitely no questions at the lamp post.
+                </span>
+              </a>
+              <a class="pocket pocket-two" href="#legal">
+                <strong>GHK-Cu</strong>
+                <span>
+                  Copper-blue, glass-vial mystique. The pocket says repair studies;
+                  the coat says keep walking like you saw nothing.
+                </span>
+              </a>
+              <a class="pocket pocket-three" href="#legal">
+                <strong>BPC-157</strong>
+                <span>
+                  The suspicious classic. Research-grade, trench-approved, and
+                  wrapped in enough caution tape to make a lawyer sweat.
+                </span>
+              </a>
+              <a class="pocket pocket-four" href="#legal">
+                <strong>Semaglutide</strong>
+                <span>
+                  A clean little vial with big “do not improvise” energy. For
+                  controlled research notes, not alleyway life choices.
+                </span>
+              </a>
+              <a class="pocket pocket-five" href="#legal">
+                <strong>Tesamorelin</strong>
+                <span>
+                  A lab-bench name with back-room charisma. Comes with a wink,
+                  a brown bag, and absolutely no advice.
+                </span>
+              </a>
+            </div>
+          </div>
+          <p class="hover-prompt">Hover the closed coat</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="legal" id="legal">
+      <p>
+        <strong>Disclaimer:</strong> Look, my lawyer says I have to write this:
+        These products are for "research purposes only." If the feds ask, I sell
+        high-end pocket lint. We cool? Good.
+      </p>
+    </footer>
+
+    <script>
+      const stage = document.querySelector(".dealer-stage");
+      const cursor = document.querySelector(".cursor-shades");
+      let played = false;
+
+      window.addEventListener("pointermove", (event) => {
+        cursor.style.transform = `translate(${event.clientX + 12}px, ${event.clientY + 14}px)`;
+      });
+
+      function playShwing() {
+        if (played) return;
+        played = true;
+
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+
+        const audio = new AudioContext();
+        const oscillator = audio.createOscillator();
+        const gain = audio.createGain();
+        const filter = audio.createBiquadFilter();
+
+        oscillator.type = "sawtooth";
+        oscillator.frequency.setValueAtTime(130, audio.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(920, audio.currentTime + 0.18);
+
+        filter.type = "highpass";
+        filter.frequency.value = 420;
+
+        gain.gain.setValueAtTime(0.0001, audio.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.08, audio.currentTime + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.25);
+
+        oscillator.connect(filter);
+        filter.connect(gain);
+        gain.connect(audio.destination);
+        oscillator.start();
+        oscillator.stop(audio.currentTime + 0.28);
+      }
+
+      stage.addEventListener("pointerenter", () => {
+        stage.classList.add("is-open");
+        playShwing();
+      });
+
+      stage.addEventListener("pointerleave", () => {
+        stage.classList.remove("is-open");
+      });
+
+      stage.addEventListener("click", () => {
+        stage.classList.toggle("is-open");
+        if (stage.classList.contains("is-open")) {
+          playShwing();
+        }
+      });
+    </script>
+  </body>
+</html>
